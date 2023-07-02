@@ -35,13 +35,17 @@ function App() {
   const [length, setLength] = useState(null);
   const [info, setInfo] = useState({
     roadNo: null,
-    laneOps: { checkboxes: null },
-    facilOps: { checkboxes: null },
-    speedOps: { checkboxes: null },
-    barrierOps: { checkboxes: null },
-    lightOps: { checkboxes: null },
-    caronlyOps: { checkboxes: null },
-    onewayOps: { checkboxes: null },
+    laneOps: { name: "차로수", selected: null, checkboxes: null },
+    facilOps: { name: "교통시설물", selected: null, checkboxes: null },
+    speedOps: { name: "제한속도", selected: null, checkboxes: null },
+    barrierOps: { name: "중앙분리대유형", selected: null, checkboxes: null },
+    lightOps: { name: "신호등개수", selected: null, checkboxes: null },
+    caronlyOps: {
+      name: "자동차전용도로유무",
+      selected: null,
+      checkboxes: null,
+    },
+    onewayOps: { name: "일방통행유무", selected: null, checkboxes: null },
   });
 
   // const handleClick = (data) => {
@@ -173,12 +177,47 @@ function App() {
       object && {
         html: `
         <div>
-          ${
-            info.laneOps
-              ? `${info.laneOps.name}: ${info.laneOps.selected.join(", ")}`
-              : "no info"
-          }
+          ${`${info.laneOps.name}: ${
+            info.laneOps.selected ? info.laneOps.selected.join(", ") : "미선택"
+          }`}
         </div>
+        <div>
+        ${`${info.facilOps.name}: ${
+          info.facilOps.selected ? info.facilOps.selected.join(", ") : "미선택"
+        }`}
+        </div>
+        <div>
+        ${`${info.speedOps.name}: ${
+          info.speedOps.selected ? info.speedOps.selected.join(", ") : "미선택"
+        }`}
+        </div>
+        <div>
+        ${`${info.barrierOps.name}: ${
+          info.barrierOps.selected
+            ? info.barrierOps.selected.join(", ")
+            : "미선택"
+        }`}
+        </div>
+        <div>
+        ${`${info.lightOps.name}: ${
+          info.lightOps.selected ? info.lightOps.selected.join(", ") : "미선택"
+        }`}
+        </div>
+        <div>
+        ${`${info.caronlyOps.name}: ${
+          info.caronlyOps.selected
+            ? info.caronlyOps.selected.join(", ")
+            : "미선택"
+        }`}
+        </div>
+        <div>
+        ${`${info.onewayOps.name}: ${
+          info.onewayOps.selected
+            ? info.onewayOps.selected.join(", ")
+            : "미선택"
+        }`}
+        </div>
+      
       `,
       }
     );
@@ -216,6 +255,9 @@ function App() {
             onClick={() => setIsFilter(!isFilter)}
           >
             {isFilter ? "Hide Filter" : "Show Filter"}
+          </button>
+          <button className="toggle_button" onClick={() => console.log(info)}>
+            STATE
           </button>
         </div>
 

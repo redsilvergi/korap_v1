@@ -48,8 +48,7 @@ const LeftBar = ({
 
   useEffect(() => {
     console.log("state:", state);
-    console.log("info:", info);
-  }, [state, info]);
+  }, [state]);
 
   const handleRoad = (options) => {
     if (options.length > 0) {
