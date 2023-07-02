@@ -1,0 +1,135 @@
+.container {
+  position: relative;
+  height: 100vh;
+}
+
+.toggle_button {
+  padding: 10px;
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  width: 100px;
+}
+
+.toggle_button:hover {
+  opacity: 0.5;
+}
+
+.toggle_button_div {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.deck-tooltip {
+  position: fixed !important;
+  background-color: white !important;
+  color: black !important;
+  padding: 10px !important;
+  font-size: 14px !important;
+  border-radius: 4px !important;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.info_temp {
+  position: fixed;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  background-color: white;
+  border: solid black 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.lengthSum {
+  position: fixed;
+  z-index: 1;
+  bottom: 40px;
+  right: 20px;
+  color: #808080;
+}
+
+.lengthSum span {
+  font-size: xx-large;
+  font-weight: bolder;
+  color: #e6003c;
+}
+
+/* #e6003c */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the transparency as desired */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Ensure the overlay is on top of other elements */
+}
+
+.loading-spinner {
+  /* color: white;
+  font-weight: bold;
+  font-size: 4rem; */
+
+  /* display: inline-block;
+  width: 100px;
+  height: 100px;
+  border: 10px solid #f3f3f3; 
+  border-top: 10px solid rgba(0, 0, 0);
+  border-radius: 50%;
+  animation: spin 2s linear infinite; */
+
+  position: relative;
+  display: inline-block;
+  width: 280px;
+  height: 120px;
+}
+
+.loading-spinner::after {
+  content: "Loading...";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  animation: blinking 2s steps(9) infinite;
+  color: #fcfcfd;
+  font-size: 4rem;
+}
+
+@keyframes blinking {
+  0%,
+  90% {
+    opacity: 1;
+  }
+  5%,
+  95% {
+    opacity: 0;
+  }
+}
+
+/* @keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} */
+
+.slider {
+  width: 100%;
+}

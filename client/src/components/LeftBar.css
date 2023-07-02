@@ -1,0 +1,114 @@
+.left_column {
+  position: fixed;
+  background-color: #e6003c;
+  z-index: 2;
+  height: 100vh;
+  width: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.left_column p {
+  color: #fcfcfd;
+  font-weight: bold;
+  font-size: 16pt;
+  text-align: center;
+  margin: 0;
+  padding: 5px;
+}
+.left_column button {
+  background-color: white;
+  color: #808080;
+  font-weight: bold;
+  font-size: 16pt;
+  text-align: center;
+  width: 80%;
+  padding: 3px;
+  margin-top: 10px;
+  border: #808080 solid 1px;
+}
+.left_column button:hover {
+  background-color: #e5fcf6;
+  color: #808080;
+}
+
+.detail_div {
+  position: fixed;
+  background-color: #fcfcfd;
+  /* opacity: 0.5; */
+  opacity: 1;
+  left: 45px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  /* gap: 0.1rem; */
+  height: 100vh;
+  /* width: 5%; */
+  width: 180px;
+  align-items: center;
+  border-right: solid transparent 3px;
+  border-image: linear-gradient(to right, #b3b3b3, transparent) 1 100%;
+  overflow: auto;
+}
+
+.accordion_div {
+  width: 100%;
+  color: #333333;
+  font-size: 12pt;
+  font-weight: bold;
+}
+/* .detail_div:hover {
+  background-color: #fcfcfd;
+  opacity: 1;
+  width: 20%;
+} */
+
+.info {
+  display: block;
+  width: 85%;
+}
+
+.info > p {
+  font-size: 0.8rem;
+}
+
+/* .detail_div:hover > .info {
+  display: block;
+} */
+
+.roadItem form {
+  display: flex;
+  flex-direction: column;
+}
+
+.roadItem form label {
+  margin-left: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.roadItem form label:hover {
+  background-color: #e5fcf6;
+}
+
+.roadItem form label p {
+  margin: 0;
+  margin-left: 5px;
+}
+
+.info_button:hover {
+  opacity: 0.5;
+}
+
+.info_button_div {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.prep {
+  padding: 0.75rem;
+  border-bottom: solid 1px #cccccc;
+  border-top: solid 1px #cccccc;
+}
