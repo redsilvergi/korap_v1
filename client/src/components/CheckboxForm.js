@@ -15,9 +15,6 @@ const CheckboxForm = ({ name, checklist }) => {
   });
 
   const updateF = useCallback(() => {
-    // obj.updateF(Object.values(checkboxes));
-    // console.log("THIS", Object.values(checkboxes), checkboxes);
-
     const sortedItems = Object.values(checkboxes).reduce((acc, val, i) => {
       if (val) {
         acc.push([...list][i]);
@@ -25,17 +22,16 @@ const CheckboxForm = ({ name, checklist }) => {
       return acc;
     }, []);
 
-    const infoObj = {
-      name: obj.name.slice(0, -1),
-      selected: sortedItems,
-      checkboxes: Object.values(checkboxes),
-    };
+    // const infoObj = {
+    //   name: obj.name.slice(0, -1),
+    //   selected: sortedItems,
+    //   checkboxes: Object.values(checkboxes),
+    // };
     // const combinedData = Object.values(checkboxes).map((value, index) => ({
     //   value,
     //   item: [...list][index],
     // }));
-    obj.updateInfo(infoObj);
-    console.log("infoObj", infoObj);
+    obj.updateInfo(sortedItems, Object.values(checkboxes));
   }, [checkboxes, obj, list]);
 
   const handleCheckboxChange = (event) => {

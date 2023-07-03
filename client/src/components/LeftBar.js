@@ -1,35 +1,54 @@
 import "./LeftBar.css";
 import React, { useEffect, useState } from "react";
-// import Slider from "react-rangeslider";
-// import "react-rangeslider/lib/index.css";
 import axios from "axios";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Accordion from "./Accordion";
 import CheckboxForm from "./CheckboxForm";
+import useInfo from "../hooks/use-info";
+import { FiSearch } from "react-icons/fi";
+import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
+import Modal from "./Modal";
+import guide from "../img/guide.PNG";
 
-const LeftBar = ({
-  setData1,
-  setLength,
-  setLD,
-  setIsFilter,
-  setInfo,
-  info,
-}) => {
-  const [state, setState] = useState({
-    roadNo: null,
-  });
+const LeftBar = ({ setData1, setLength, setLD, setIsFilter }) => {
+  const { info, setInfo, isSelect, setIsSelect } = useInfo();
+  //Modal/////////////////////////////////////////////////////////////
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModOpen = () => {
+    setShowModal(true);
+  };
+
+  const handleModClose = () => {
+    setShowModal(false);
+  };
+
+  const modal = (
+    <Modal onClose={handleModClose}>
+      <img src={guide} alt="guide1" width="160%" />
+    </Modal>
+  );
+
+  ///////////////////////////////////////////////////////////////
+  useEffect(() => {
+    !isSelect &&
+      setInfo((prev) => ({
+        ...prev,
+        roadNo: { ...prev.roadNo, selected: null },
+      }));
+  }, [isSelect, setInfo]);
 
   const handleCondition = async () => {
     setLD(true);
     const response = await axios.get(
-      `http://localhost:4000/conditions/${state.roadNo}/${info.laneOps.checkboxes}/${info.facilOps.checkboxes}/${info.speedOps.checkboxes}/${info.barrierOps.checkboxes}/${info.lightOps.checkboxes}/${info.caronlyOps.checkboxes}/${info.onewayOps.checkboxes}`
+      `http://localhost:4000/conditions/${info.roadNo.selected}/${info.laneOps.checkboxes}/${info.facilOps.checkboxes}/${info.speedOps.checkboxes}/${info.barrierOps.checkboxes}/${info.lightOps.checkboxes}/${info.caronlyOps.checkboxes}/${info.onewayOps.checkboxes}`
     );
     setData1(response.data.mergedGJ);
     setLD(false);
     setIsFilter(true);
     setLength(response.data.lengthSum);
-    console.log(response.data);
+    // console.log(response.data);
   };
   ///////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
@@ -46,74 +65,91 @@ const LeftBar = ({
     return { value: item, label: `국도 ${item}호선` };
   });
 
-  useEffect(() => {
-    console.log("state:", state);
-  }, [state]);
+  // useEffect(() => {
+  //   console.log("info:", info);
+  // }, [info]);
 
   const handleRoad = (options) => {
     if (options.length > 0) {
       const tempOpts = options.map((item) => {
         return item.value;
       });
-      setState((prev) => ({ ...prev, roadNo: tempOpts }));
+      // console.log("tempOpts:", tempOpts);
+      setInfo((prev) => ({
+        ...prev,
+        roadNo: { name: "국도번호", selected: tempOpts },
+      }));
     } else {
-      setState((prev) => ({ ...prev, roadNo: null }));
+      setInfo((prev) => ({
+        ...prev,
+        roadNo: { name: "국도번호", selected: null },
+      }));
     }
   };
 
   const checklist = [
-    // {
-    //   name: "도로폭별",
-    //   options: ["4m 이하", "4-8m ", "8-12m", "12m 초과"],
-    //   updateF: (checked) => setState((prev) => ({ ...prev, width: checked })),
-    // },
     {
       name: "차로수별",
       options: ["1차선", "2차선", "4차선", "5-8차선", "9차선 이상"],
-      // updateF: (checked) => setState((prev) => ({ ...prev, laneOps: checked })),
-      updateInfo: (obj) => setInfo((prev) => ({ ...prev, laneOps: obj })),
+      updateInfo: (sel, chb) =>
+        setInfo((prev) => ({
+          ...prev,
+          laneOps: { ...prev.laneOps, selected: sel, checkboxes: chb },
+        })),
     },
     {
       name: "교통시설물별",
       options: ["일반도로", "교량", "터널", "고가도로", "지하도로"],
-      // updateF: (checked) =>
-      //   setState((prev) => ({ ...prev, facilOps: checked })),
-      updateInfo: (obj) => setInfo((prev) => ({ ...prev, facilOps: obj })),
+      updateInfo: (sel, chb) =>
+        setInfo((prev) => ({
+          ...prev,
+          facilOps: { ...prev.facilOps, selected: sel, checkboxes: chb },
+        })),
     },
     {
       name: "제한속도별",
       options: ["20", "30", "40", "50", "60", "70", "80", "90이상", "결측"],
-      // updateF: (checked) =>
-      //   setState((prev) => ({ ...prev, speedOps: checked })),
-      updateInfo: (obj) => setInfo((prev) => ({ ...prev, speedOps: obj })),
+      updateInfo: (sel, chb) =>
+        setInfo((prev) => ({
+          ...prev,
+          speedOps: { ...prev.speedOps, selected: sel, checkboxes: chb },
+        })),
     },
     {
       name: "중앙분리대유형별",
       options: ["없음", "벽", "봉", "화단", "안전지대", "금속", "기타"],
-      // updateF: (checked) =>
-      //   setState((prev) => ({ ...prev, barrierOps: checked })),
-      updateInfo: (obj) => setInfo((prev) => ({ ...prev, barrierOps: obj })),
+      updateInfo: (sel, chb) =>
+        setInfo((prev) => ({
+          ...prev,
+          barrierOps: { ...prev.barrierOps, selected: sel, checkboxes: chb },
+        })),
     },
     {
       name: "신호등개수별",
       options: ["0", "1", "2", "3", "4", "결측"],
-      // updateF: (checked) =>
-      //   setState((prev) => ({ ...prev, lightOps: checked })),
-      updateInfo: (obj) => setInfo((prev) => ({ ...prev, lightOps: obj })),
+      updateInfo: (sel, chb) =>
+        setInfo((prev) => ({
+          ...prev,
+          lightOps: { ...prev.lightOps, selected: sel, checkboxes: chb },
+        })),
     },
     {
       name: "자동차전용도로유무별",
       options: ["비해당", "해당", "결측"],
-      // updateF: (checked) =>
-      //   setState((prev) => ({ ...prev, caronlyOps: checked })),
-      updateInfo: (obj) => setInfo((prev) => ({ ...prev, caronlyOps: obj })),
+      updateInfo: (sel, chb) =>
+        setInfo((prev) => ({
+          ...prev,
+          caronlyOps: { ...prev.caronlyOps, selected: sel, checkboxes: chb },
+        })),
     },
     {
       name: "일방통행유무별",
       options: ["비해당", "해당"],
-      // updateF: (checked) =>
-      //   setState((prev) => ({ ...prev, onewayOps: checked })),
-      updateInfo: (obj) => setInfo((prev) => ({ ...prev, onewayOps: obj })),
+      updateInfo: (sel, chb) =>
+        setInfo((prev) => ({
+          ...prev,
+          onewayOps: { ...prev.onewayOps, selected: sel, checkboxes: chb },
+        })),
     },
   ];
 
@@ -122,26 +158,19 @@ const LeftBar = ({
       id: "국도번호별",
       label: "- 국도번호별",
       content: (
-        <div className="roadNo">
-          <Select
+        <div className="roadNo" onClick={() => setIsSelect(!isSelect)}>
+          {/* <Select
             options={options}
             closeMenuOnSelect={false}
             components={makeAnimated()}
             isMulti
             onChange={handleRoad}
-          />
+          /> */}
+          <div>선택</div>
+          {isSelect ? <GoTriangleLeft /> : <GoTriangleRight />}
         </div>
       ),
     },
-    // {
-    //   id: "도로폭별",
-    //   label: "- 도로폭별",
-    //   content: (
-    //     <div className="width roadItem">
-    //       <CheckboxForm name={"도로폭별"} checklist={checklist} />
-    //     </div>
-    //   ),
-    // },
     {
       id: "차로수별",
       label: "- 차로수별",
@@ -211,11 +240,11 @@ const LeftBar = ({
     {
       id: "도로현황",
       label: "도로현황",
-      content: <Accordion items={roadStatusItems} setState={setState} />,
+      content: <Accordion items={roadStatusItems} />,
     },
     {
       id: "TMS",
-      label: "통행량(TMS)",
+      label: "교통량(TMS)",
       content: <div className="prep">- 준비중</div>,
     },
     {
@@ -228,13 +257,45 @@ const LeftBar = ({
   return (
     <div>
       <div className="left_column">
-        <p>일반국도현황</p>
-        <button onClick={handleCondition}>S</button>
+        <a href="./">
+          <p>일반국도현황</p>
+        </a>
       </div>
       <div className="detail_div">
         <div className="accordion_div">
           <Accordion items={items} />
         </div>
+        <div className="footnote">
+          <div>
+            <div className="fnt">도로정보 출처</div>
+            2021, 수치지형도(도로중심선데이터), 국토지리원
+          </div>
+          <div>
+            <div className="fnt">속성정보 출처</div>
+            2019, 국가교통망 GIS 데이터, 국토부/KOTI
+          </div>
+          <br />
+          <div>*시차로 인한 속성정보 누락구간에 유의·활용 바랍니다.</div>
+          <div onClick={handleModOpen} className="guide">
+            설명서
+          </div>
+          {showModal && modal}
+        </div>
+      </div>
+      {isSelect && (
+        <div className="selectRoad">
+          <Select
+            options={options}
+            closeMenuOnSelect={false}
+            components={makeAnimated()}
+            isMulti
+            onChange={handleRoad}
+          />
+        </div>
+      )}
+      <div className="searchB" onClick={handleCondition}>
+        <FiSearch />
+        필터적용
       </div>
     </div>
   );
