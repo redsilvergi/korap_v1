@@ -6,9 +6,8 @@ import DeckGL, { GeoJsonLayer } from "deck.gl";
 // import { MVTLayer } from "@deck.gl/geo-layers";
 import "mapbox-gl/dist/mapbox-gl.css"; //remove console log error
 import "./LandingPage.css";
-import dissolvedRoad from "../National_Road_dissolve.json";
+import dissolvedRoad from "../National_Road_Dissolved3.json";
 import intPoint from "../National_Road_Interchange_Final_geojson.json";
-// import cityDissolved from "./city_dissolved.json";
 import LeftBar from "../components/LeftBar";
 import useTooltip from "../hooks/use-tooltip";
 import { GiExpand } from "react-icons/gi";

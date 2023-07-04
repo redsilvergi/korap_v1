@@ -42,7 +42,7 @@ const LeftBar = ({ setData1, setLength, setLD, setIsFilter }) => {
   const handleCondition = async () => {
     setLD(true);
     const response = await axios.get(
-      `http://localhost:4000/conditions/${info.roadNo.selected}/${info.laneOps.checkboxes}/${info.facilOps.checkboxes}/${info.speedOps.checkboxes}/${info.barrierOps.checkboxes}/${info.lightOps.checkboxes}/${info.caronlyOps.checkboxes}/${info.onewayOps.checkboxes}`
+      `http://3.38.112.152/conditions/${info.roadNo.selected}/${info.laneOps.checkboxes}/${info.facilOps.checkboxes}/${info.speedOps.checkboxes}/${info.barrierOps.checkboxes}/${info.lightOps.checkboxes}/${info.caronlyOps.checkboxes}/${info.onewayOps.checkboxes}`
     );
     setData1(response.data.mergedGJ);
     setLD(false);
